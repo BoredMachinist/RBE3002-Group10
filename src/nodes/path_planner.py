@@ -144,8 +144,13 @@ class PathPlanner:
         :return        [[(int,int)]]   A list of walkable 4-neighbors.
         """
         ### REQUIRED CREDIT
-        pass
-
+        out = []
+        for x_offset in range(-1, 1):
+            for y_offset in range(-1, 1):
+                x_coord = x + x_offset
+                y_coord = y + y_offset
+                if (x_coord >= 0 and x_coord < mapdata.info.width) and (y_coord >= 0 and y_coord < mapdata.info.height) and (abs(x) != abs(y)):
+                    print ("X: " + x_coord +" Y: " + y_coord)
     
     
     @staticmethod
@@ -176,7 +181,6 @@ class PathPlanner:
         try:
             get_map_proxy = rospy.ServiceProxy('static_map', GetMap)
             get_map = get_map_proxy()
-            print(get_map.map)
             return get_map.map
         except rospy.ServiceException as e:
             print("Service call failed: %s" % e)
