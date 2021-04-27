@@ -167,11 +167,11 @@ class PathPlanner:
                 x_coord = x + x_offset
                 y_coord = y + y_offset
                 if (0 <= x_coord < mapdata.info.width) and (0 <= y_coord < mapdata.info.height) and (abs(x_offset) != abs(y_offset)):
-                    print("X: " + str(x_coord) + " Y: " + str(y_coord))
+
                     if PathPlanner.is_cell_walkable(mapdata, x_coord, y_coord):
                         out.append((x_coord, y_coord))
 
-        print(out)
+        return out
     
     
     @staticmethod
@@ -191,7 +191,9 @@ class PathPlanner:
                 y_coord = y + y_offset
                 if (0 <= x_coord < mapdata.info.width) and (
                         0 <= y_coord < mapdata.info.height) and not (x_offset == 0 and y_offset == 0):
-                    print("X: " + str(x_coord) + " Y: " + str(y_coord))
+                    if PathPlanner.is_cell_walkable(mapdata, x_coord, y_coord):
+                        out.append((x_coord, y_coord))
+        return out
 
     
     
