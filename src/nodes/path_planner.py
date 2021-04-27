@@ -158,7 +158,7 @@ class PathPlanner:
                 x_coord = x + x_offset
                 y_coord = y + y_offset
                 if (x_coord >= 0 and x_coord < mapdata.info.width) and (y_coord >= 0 and y_coord < mapdata.info.height) and (abs(x) != abs(y)):
-                    print ("X: " + x_coord +" Y: " + y_coord)
+                    print ("X: " + str(x_coord) +" Y: " + str(y_coord))
     
     
     @staticmethod
@@ -178,7 +178,7 @@ class PathPlanner:
                 y_coord = y + y_offset
                 if (x_coord >= 0 and x_coord < mapdata.info.width) and (
                         y_coord >= 0 and y_coord < mapdata.info.height) and not (x == 0 and y == 0):
-                    print("X: " + x_coord + " Y: " + y_coord)
+                    print("X: " + str(x_coord) + " Y: " + str(y_coord))
 
     
     
