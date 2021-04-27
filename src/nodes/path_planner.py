@@ -36,7 +36,8 @@ class PathPlanner:
         rospy.sleep(1.0)
         rospy.loginfo("Path planner node ready")
 
-        PathPlanner.request_map();
+        map = PathPlanner.request_map()
+        print(PathPlanner.getValue(map, 0, 0))
 
 
 
@@ -122,7 +123,16 @@ class PathPlanner:
         ### REQUIRED CREDIT
         pass
 
-               
+    @staticmethod
+    def getValue(mapdata, x, y):
+        if x < 0 or x >= mapdata.info.width:
+            rospy.logerror("Examined value at out of bounds width")
+            return -1
+        if y < 0 or y >= mapdata.info.height:
+            rospy.logerror("Examined value at out of bounds width")
+            return -1
+
+        return mapdata.data[y*mapdata.info.width + x]
 
     @staticmethod
     def neighbors_of_4(mapdata, x, y):
