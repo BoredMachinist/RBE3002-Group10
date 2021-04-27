@@ -46,6 +46,8 @@ class PathPlanner:
         PathPlanner.neighbors_of_8(map, 2, 2)
         print("8 (0,0)")
         PathPlanner.neighbors_of_8(map, 0, 0)
+        print("8 (36,36)")
+        PathPlanner.neighbors_of_8(map, 36, 36)
 
 
 
@@ -129,7 +131,14 @@ class PathPlanner:
         :return        [boolean]       True if the cell is walkable, False otherwise
         """
         ### REQUIRED CREDIT
-        pass
+        if x < 0 or x >= mapdata.info.width:
+            rospy.logerror("Examined value at out of bounds width")
+            return False
+        if y < 0 or y >= mapdata.info.height:
+            rospy.logerror("Examined value at out of bounds width")
+            return False
+
+        return mapdata.data[y * mapdata.info.width + x] == 0
 
     @staticmethod
     def getValue(mapdata, x, y):
@@ -153,12 +162,16 @@ class PathPlanner:
         """
         ### REQUIRED CREDIT
         out = []
-        for x_offset in range(-1, 1):
-            for y_offset in range(-1, 1):
+        for x_offset in range(-1, 2):
+            for y_offset in range(-1, 2):
                 x_coord = x + x_offset
                 y_coord = y + y_offset
-                if (x_coord >= 0 and x_coord < mapdata.info.width) and (y_coord >= 0 and y_coord < mapdata.info.height) and (abs(x) != abs(y)):
-                    print ("X: " + str(x_coord) +" Y: " + str(y_coord))
+                if (0 <= x_coord < mapdata.info.width) and (0 <= y_coord < mapdata.info.height) and (abs(x_offset) != abs(y_offset)):
+                    print("X: " + str(x_coord) + " Y: " + str(y_coord))
+                    if PathPlanner.is_cell_walkable(mapdata, x_coord, y_coord):
+                        out.append((x_coord, y_coord))
+
+        print(out)
     
     
     @staticmethod
@@ -172,12 +185,12 @@ class PathPlanner:
         """
         ### REQUIRED CREDIT
         out = []
-        for x_offset in range(-1, 1):
-            for y_offset in range(-1, 1):
+        for x_offset in range(-1, 2):
+            for y_offset in range(-1, 2):
                 x_coord = x + x_offset
                 y_coord = y + y_offset
-                if (x_coord >= 0 and x_coord < mapdata.info.width) and (
-                        y_coord >= 0 and y_coord < mapdata.info.height) and not (x == 0 and y == 0):
+                if (0 <= x_coord < mapdata.info.width) and (
+                        0 <= y_coord < mapdata.info.height) and not (x_offset == 0 and y_offset == 0):
                     print("X: " + str(x_coord) + " Y: " + str(y_coord))
 
     
