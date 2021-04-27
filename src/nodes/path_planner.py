@@ -21,18 +21,22 @@ class PathPlanner:
         rospy.init_node("path_planner")
         ## Create a new service called "plan_path" that accepts messages of
         ## type GetPlan and calls self.plan_path() when a message is received
-        # TODO
+        self.planning_service = rospy.Service("plan_path", GetPlan, self.plan_path)
         ## Create a publisher for the C-space (the enlarged occupancy grid)
         ## The topic is "/path_planner/cspace", the message type is GridCells
-        # TODO
+        self.cspace_publisher = rospy.Publisher("path_planner/cspace", GridCells, queue_size=10)
         ## Create publishers for A* (expanded cells, frontier, ...)
         ## Choose a the topic names, the message type is GridCells
-        # TODO
+        self.expanded_publisher = rospy.Publisher("path_planner/expanded_cells", GridCells, queue_size=10)
+        self.frontier_publisher = rospy.Publisher("path_planner/frontier_cells", GridCells, queue_size=10)
         ## Initialize the request counter
         # TODO
+
         ## Sleep to allow roscore to do some housekeeping
         rospy.sleep(1.0)
         rospy.loginfo("Path planner node ready")
+
+        PathPlanner.request_map();
 
 
 
@@ -157,6 +161,16 @@ class PathPlanner:
         """
         ### REQUIRED CREDIT
         rospy.loginfo("Requesting the map")
+
+        rospy.wait_for_service('static_map')
+        try:
+            get_map = rospy.ServiceProxy('static_map', GetMap)
+            print(get_map.map)
+            return get_map.map
+        except rospy.ServiceException as e:
+            print("Service call failed: %s" % e)
+            return None
+
 
 
 
