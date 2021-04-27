@@ -37,7 +37,15 @@ class PathPlanner:
         rospy.loginfo("Path planner node ready")
 
         map = PathPlanner.request_map()
-        print(PathPlanner.getValue(map, 0, 0))
+
+        print("4 (2,2)")
+        PathPlanner.neighbors_of_4(map, 2, 2)
+        print("4 (0,0)")
+        PathPlanner.neighbors_of_4(map, 0, 0)
+        print("8 (2,2)")
+        PathPlanner.neighbors_of_8(map, 2, 2)
+        print("8 (0,0)")
+        PathPlanner.neighbors_of_8(map, 0, 0)
 
 
 
@@ -163,7 +171,14 @@ class PathPlanner:
         :return        [[(int,int)]]   A list of walkable 8-neighbors.
         """
         ### REQUIRED CREDIT
-        pass
+        out = []
+        for x_offset in range(-1, 1):
+            for y_offset in range(-1, 1):
+                x_coord = x + x_offset
+                y_coord = y + y_offset
+                if (x_coord >= 0 and x_coord < mapdata.info.width) and (
+                        y_coord >= 0 and y_coord < mapdata.info.height) and not (x == 0 and y == 0):
+                    print("X: " + x_coord + " Y: " + y_coord)
 
     
     
