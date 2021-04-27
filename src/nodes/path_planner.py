@@ -164,7 +164,8 @@ class PathPlanner:
 
         rospy.wait_for_service('static_map')
         try:
-            get_map = rospy.ServiceProxy('static_map', GetMap)
+            get_map_proxy = rospy.ServiceProxy('static_map', GetMap)
+            get_map = get_map_proxy()
             print(get_map.map)
             return get_map.map
         except rospy.ServiceException as e:
